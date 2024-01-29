@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Vardas</th>
+      <th scope="col">Pavarde</th>
+      <th scope="col">Uzdirbti pinigai</th>
+    </tr>
+  </thead>
+  <tbody>
+
+
+{% for customer, suma in result.items %}
+
+<tr>
+
+        <th scope="row">{{ forloop.counter }}</th>
+          <td>{{ customer.name }}</td>
+          <td>{{ customer.last_name }}</td>
+          <td>{{ suma.received_money }}</td>
+
+
+</tr>
+     {% endfor %}
+  </tbody>
+    </table>
+
+
+{% endblock %}

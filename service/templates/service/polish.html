@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<a class="btn btn-danger" href="{% url 'service:add_unfinished_car_photo' %}" role="button">Prideti nuotrauka "PRIES"</a>
+<a class="btn btn-primary" href="{% url 'service:add_finished_car_photo' 5 %}" role="button">Prideti nuotrauka "PO"</a>
+
+
+
+<input type=button value="Previous Page" onClick="javascript:history.go(-1);">
+{% endblock %}

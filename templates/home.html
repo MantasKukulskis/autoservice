@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+   <link rel="stylesheet" href="{% static 'poliravimas/style.css' %}">
+
+    <a class="btn btn-danger" href="{% url 'service:show_contacts' %}" role="button">Kontaktai</a>
+    <a class="btn btn-primary" href="{% url 'service:work_pricing' %}" role="button">Darbu kainorastis</a>
+    <a class="btn btn-primary" href="{% url 'service:finished_jobs_photo' %}" role="button">Atliktu darbu nuotraukos</a>
+
+
+
+
+{% endblock %}

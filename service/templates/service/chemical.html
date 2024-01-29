@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<a class="btn btn-danger" href="{% url 'service:add_unfinished_car_photo' %}" role="button">Prideti nuotrauka "PRIES"</a>
+<a class="btn btn-primary" href="{% url 'service:add_finished_car_photo' 1 %}" role="button">Prideti nuotrauka "PO"</a>
+
+
+
+<input type=button value="Previous Page" onClick="javascript:history.go(-1);">
+
+
+{% load static %}
+
+   <link rel="stylesheet" href="{% static 'poliravimas/chemist.css' %}">
+<h2>griztam atgal </h2>
+
+<input type=button value="Previous Page" onClick="javascript:history.go(-1);">
+
+{% endblock %}

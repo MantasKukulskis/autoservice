@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<a class="btn btn-primary" href="{% url 'service:add_customer' %}" role="button">Prideti klienta</a>
+<a class="btn btn-primary" href="{% url 'service:get_received_money' %}" role="button">Visi klientai</a>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Vardas</th>
+      <th scope="col">Pavarde</th>
+      <th scope="col">Telefono numeris</th>
+      <th scope="col">Elektroninis pastas</th>
+      <th scope="col">Istrinti klienta</th>
+    </tr>
+  </thead>
+  <tbody>
+
+
+ {% for customer in customers %}
+
+<tr>
+
+        <th scope="row">{{ forloop.counter }}</th>
+          <td><a href="{% url 'service:customer' customer.id %}">{{ customer.name }}</a></td>
+          <td>{{ customer.last_name }}</td>
+          <td>{{ customer.phone_number }}</td>
+          <td>{{ customer.email_address }}</td>
+         <td><a href="{% url 'service:delete_customer' customer.id %}">Istrinti</a></td>
+
+</tr>
+ {% endfor %}
+  </tbody>
+    </table>
+
+
+<input type=button value="Atgal" onClick="javascript:history.go(-1);">
+{% endblock %}

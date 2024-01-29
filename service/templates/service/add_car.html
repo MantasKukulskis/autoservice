@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+  {% for cars in car %}
+
+  <tr>
+
+        <th scope="row">{{ forloop.counter }}</th>
+          <td><a href="{% url 'service:add_car' ">{{ car }}</a></td>
+          <td>{{ car.model }}</td>
+          <td>{{ car.color }}</td>
+          <td>{{ car.license_plate }}</td>
+
+</tr>
+
+   {% endfor %}
+
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Issaugoti">
+
+</form>
+<h2> cia add car</h2>
+{% endblock %}
