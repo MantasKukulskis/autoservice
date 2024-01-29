@@ -88,11 +88,7 @@ class Event(BaseModel):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(args, kwargs)
-        self.id = None
-
     @property
     def get_html_url(self):
         url = reverse('service:event', args=(self.id,))
-        return f'<a href="{url}"> {self.title} </a>'
+        return f'<a href="{url}">{self.title}</a>'
