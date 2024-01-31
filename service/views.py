@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
-from .forms import CustomerForm, UnfinishedCarPhotoForm, FinishedCarPhotoForm, EventForm
-from .models import Customer, Car, FinishedCarPhoto, Event
+from .forms import CustomerForm, EventForm, WorkPricingForm
+from .models import Customer, Car, Event, WorkPricing
 from django.forms import modelform_factory
 from datetime import datetime, date, timedelta
 from django.views import generic
@@ -25,10 +25,6 @@ def show_contacts(request):
 
 def show_finished_jobs_photo(request):
     return render(request, 'service/finished_jobs_photo.html')
-
-
-def show_work_pricing(request):
-    return render(request, 'service/work_pricing.html')
 
 
 def show_chemical(request):
@@ -65,7 +61,7 @@ def delete_customer(request, customer_id):
 def get_customer(request, customer_id):
     customer = Customer.objects.get(pk=customer_id)
     cars = Car.objects.filter(customer=customer)
-    money = FinishedCarPhoto.objects.filter(customer=customer)
+    money = Event.objects.filter(customer=customer)
     money = sum(m.received_money for m in money)
     context = {
         'customer': customer,
@@ -104,33 +100,33 @@ def add_car(request, customer_id):
     return render(request, "service/add_car.html", context)
 
 
-def add_unfinished_car_photo(request):
-    if request.method == "POST":
-        form = UnfinishedCarPhotoForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect("service:customers")
-        else:
-            context = {'form': form}
-            return render(request, "service/add_unfinished_car_photo.html", context)
-    context = {"form": UnfinishedCarPhotoForm()}
-    return render(request, "service/add_unfinished_car_photo.html", context)
-
-
-def add_finished_car_photo(request, customer_id):
-    new = FinishedCarPhotoForm()
-    if request.method == "POST":
-        new = FinishedCarPhotoForm(request.POST, request.FILES)
-        if new.is_valid():
-            new.save()
-            return redirect("service:customers")
-    form = new
-    context = {'form': form, 'customer_id': customer_id}
-    return render(request, "service/add_finished_car_photo.html", context)
-
-
+# def add_unfinished_car_photo(request):
+#     if request.method == "POST":
+#         form = UnfinishedCarPhotoForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             return redirect("service:customers")
+#         else:
+#             context = {'form': form}
+#             return render(request, "service/add_unfinished_car_photo.html", context)
+#     context = {"form": UnfinishedCarPhotoForm()}
+#     return render(request, "service/add_unfinished_car_photo.html", context)
+#
+#
+# def add_finished_car_photo(request, customer_id):
+#     new = FinishedCarPhotoForm()
+#     if request.method == "POST":
+#         new = FinishedCarPhotoForm(request.POST, request.FILES)
+#         if new.is_valid():
+#             new.save()
+#             return redirect("service:customers")
+#     form = new
+#     context = {'form': form, 'customer_id': customer_id}
+#     return render(request, "service/add_finished_car_photo.html", context)
+#
+#
 def get_received_money(request):
-    money = FinishedCarPhoto.objects.all()
+    money = Event.objects.all()
     result = {}
     for m in money:
         customer = m.customer
@@ -192,4 +188,42 @@ def event(request, event_id=None):
     return render(request, 'service/event.html', {'form': form})
 
 
+def work_pricing(request):
+    price = WorkPricing.objects.all()
+    context = {'price': price, 'work_id': 1}
+    return render(request, 'service/work_pricing.html', context)
 
+
+def add_work(request):
+    if request.method == 'POST':
+        form = WorkPricingForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("service:work_pricing")
+    else:
+        form = WorkPricingForm()
+    context = {'form': form}
+    return render(request, 'service/add_work.html', context)
+
+
+def update_work(request, work_id):
+    instance = WorkPricing.objects.get(pk=work_id)
+    form = WorkPricingForm(request.POST or None, request.FILES or None, instance=instance)
+    if form.is_valid():
+        form.save()
+        return redirect("service:work_pricing")
+    context = {'form': form}
+    return render(request, "service/update_work.html", context=context)
+
+
+
+
+
+
+def delete_work(request, work_id):
+    work = WorkPricing.objects.get(pk=work_id)
+    if request.method == 'POST':
+        work.delete()
+        return redirect("service:work_pricing")
+    context = {'work': work}
+    return render(request, "service/delete_work.html", context)

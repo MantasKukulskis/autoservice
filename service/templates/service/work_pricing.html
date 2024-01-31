@@ -2,11 +2,36 @@
 
 {% block content %}
 
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="OK">
+<h1> {{work_id}} cia yra  </h1>
 
-</form>
-<h2> cia kainos </h2>
+<a class="btn btn-primary" href="{% url 'service:add_work' %}" role="button">Prideti darba</a>
+<a class="btn btn-primary" href="{% url 'service:update_work' work_id %}" role="button">Atnaujinti darbu sarasa</a>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Paslaugos pavadinimas</th>
+      <th scope="col">Paslaugos kaina</th>
+        <th scope="col">Istrinti paslauga</th>
+
+    </tr>
+  </thead>
+  <tbody>
+
+
+ {% for prices in price %}
+
+<tr>
+
+        <th scope="row">{{ forloop.counter }}</th>
+          <td><a href="{% url 'service:work_pricing' %}">{{ prices }}</a></td>
+          <td>{{ prices.prise_of_work }}</td>
+            <td><a href="{% url 'service:delete_work' work_id %}">Istrinti</a></td>
+
+
+</tr>
+ {% endfor %}
+  </tbody>
+    </table>
 {% endblock %}
