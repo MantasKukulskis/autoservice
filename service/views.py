@@ -216,10 +216,6 @@ def update_work(request, work_id):
     return render(request, "service/update_work.html", context=context)
 
 
-
-
-
-
 def delete_work(request, work_id):
     work = WorkPricing.objects.get(pk=work_id)
     if request.method == 'POST':
