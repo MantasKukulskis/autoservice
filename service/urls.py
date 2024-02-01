@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import show_polish, show_chemical, all_customers, add_customer, delete_customer, get_customer,\
+from .views import all_customers, add_customer, delete_customer, get_customer,\
     update_customer, add_car, show_contacts, get_received_money, add_work, update_work, delete_work, \
     show_finished_jobs_photo, CalendarView, event, work_pricing
 from django.conf.urls.static import static
@@ -9,17 +9,9 @@ app_name = 'service'
 
 # poliravimo urls
 urlpatterns = [
-    path("polish/", show_polish, name="show_polish"),
     path("calendar/", CalendarView.as_view(), name="calendar"),
     path("calendar/event/", event, name="event"),
     path("calendar/event/<int:event_id>/modify", event, name="modify_event"),
-    # path("calendar/event/add_unfinished_car_photo/", add_unfinished_car_photo, name="add_unfinished_car_photo"),
-    # path("calendar/event/add_finished_car_photo/<int:customer_id>", add_finished_car_photo, name="add_finished_car_photo"),
-]
-
-# cheminio valymo urls
-urlpatterns += [
-    path("chemical/", show_chemical, name="show_chemical"),
 ]
 
 # customers urls

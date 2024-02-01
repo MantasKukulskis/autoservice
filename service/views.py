@@ -15,20 +15,12 @@ def index(request):
     return HttpResponse(request, "service html")
 
 
-def show_polish(request):
-    return render(request, 'service/polish.html')
-
-
 def show_contacts(request):
     return render(request, 'service/contacts.html')
 
 
 def show_finished_jobs_photo(request):
     return render(request, 'service/finished_jobs_photo.html')
-
-
-def show_chemical(request):
-    return render(request, 'service/chemical.html')
 
 
 def all_customers(request):

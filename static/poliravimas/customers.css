@@ -2,14 +2,14 @@ h2 {
     color: yellow;
 }
 
+
 body {
-    background: white url("images/8888.jpeg") no-repeat;
+    background: white url("images/people.jpg") no-repeat;
       font-weight: 700;
       font-size: 20px;
       letter-spacing: 0.64px;
       color: #585d74;
-      background-size: 2500px 950px;
-
+      background-size: 1500px 750px;
 }
 
 

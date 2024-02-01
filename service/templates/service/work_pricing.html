@@ -4,6 +4,10 @@
 
 <h1> {{work_id}} cia yra  </h1>
 
+{% load static %}
+
+   <link rel="stylesheet" href="{% static 'poliravimas/prices.css' %}">
+
 <a class="btn btn-primary" href="{% url 'service:add_work' %}" role="button">Prideti darba</a>
 <a class="btn btn-primary" href="{% url 'service:update_work' work_id %}" role="button">Atnaujinti darbu sarasa</a>
 
