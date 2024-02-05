@@ -1,10 +1,7 @@
-import datetime
 
 from django import forms
-from django.forms import ModelForm, DateInput
-from django.forms import modelform_factory
-
-from service.models import Car, Service, Employer, Customer, Jobs, Event, WorkPricing
+from django.forms import ModelForm, DateInput, ValidationError
+from service.models import Car, Service, Employer, Customer, Event, WorkPricing, Login, Register
 
 # CarForm = modelform_factory(Car, fields=('car', 'model', 'color', 'license_plate', 'customer'))
 
@@ -66,6 +63,7 @@ class CustomerForm(forms.ModelForm):
 
 class EventForm(ModelForm):
     class Meta:
+        works_and_prices = forms.ModelMultipleChoiceField(queryset=Event.objects.all(), required=False)
         model = Event
         widgets = {
           'start_time': DateInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
@@ -85,4 +83,30 @@ class WorkPricingForm(ModelForm):
         fields = '__all__'
 
 
+class LoginForm(forms.ModelForm):
+    username = forms.CharField(max_length=200)
+    password = forms.CharField(max_length=200)
 
+    class Meta:
+        model = Login
+        fields = '__all__'
+
+
+class PasswordChangeForm(ModelForm):
+    new_password = forms.CharField(max_length=30)
+
+    def clean_new_password(self):
+        new_password = self.cleaned_data.get('new_password')
+        if len(new_password) < 8:
+            raise ValidationError("Slaptažodis negali būti trumpesnis, nei 8 simboliai")
+        if new_password.isalpha() or new_password.isnumeric():
+            raise ValidationError("Slaptažodis turi turėti skaičius ir raides")
+        return new_password
+
+
+class RegisterForm(ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+
+    class Meta:
+        model = Register
+        fields = '__all__'

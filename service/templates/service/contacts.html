@@ -2,11 +2,10 @@
 
 {% block content %}
 
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="OK">
+{% load static %}
 
-</form>
-<h2> cia kontaktai </h2>
+<link rel="stylesheet" href="{% static 'poliravimas/kontaktai.css' %}">
+
+<h2> Poliravimas +37062142988 </h2>
+<h2> Cheminis valymas +37062142988 </h2>
 {% endblock %}

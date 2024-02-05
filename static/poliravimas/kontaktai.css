@@ -1,0 +1,15 @@
+h2 {
+    color: black;
+}
+
+body {
+    background: grey url("images/contacts.jpg") no-repeat;
+      background-position: right top;
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: 0.64px;
+      color: #585d74;
+      background-size: 800px 450px;
+
+}
+

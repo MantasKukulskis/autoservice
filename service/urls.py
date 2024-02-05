@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import all_customers, add_customer, delete_customer, get_customer,\
     update_customer, add_car, show_contacts, get_received_money, add_work, update_work, delete_work, \
-    show_finished_jobs_photo, CalendarView, event, work_pricing
+    show_finished_jobs_photo, CalendarView, event, work_pricing, CustomerListView, PriceListView
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -16,7 +16,8 @@ urlpatterns = [
 
 # customers urls
 urlpatterns += [
-    path("customers/", all_customers, name="customers"),
+    # path("customers/", all_customers, name="customers"),
+    path("customers/", CustomerListView.as_view(), name="customers"),
     path("customers/<int:customer_id>", get_customer, name="customer"),
     path("get_received_money", get_received_money, name="get_received_money"),
     path("add_customer/", add_customer, name="add_customer"),
@@ -32,8 +33,11 @@ urlpatterns += [
 # home urls
 urlpatterns += [
     path("contacts/", show_contacts, name="show_contacts"),
-    path("work_pricing/", work_pricing, name="work_pricing"),
+    path("work_pricing/", PriceListView.as_view(), name="work_pricing"),
     path("finished_jobs_photo/", show_finished_jobs_photo, name="finished_jobs_photo"),
     ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+
+# login urls

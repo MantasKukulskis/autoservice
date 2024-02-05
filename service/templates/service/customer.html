@@ -4,9 +4,9 @@
 
 
 
-    <a class="btn btn-danger" href="{% url 'service:delete_customer' customer.id %}" role="button">istrinti klienta</a>
-    <a class="btn btn-primary" href="{% url 'service:update_customer' customer.id %}" role="button">atnaujinti kliento duomenis</a>
-    <a class="btn btn-warning" href="{% url 'service:add_car' customer.id %}" role="button">prideti automobili</a>
+    <a class="btn btn-danger" href="{% url 'service:delete_customer' customer.id %}" role="button">Ištrinti klientą</a>
+    <a class="btn btn-primary" href="{% url 'service:update_customer' customer.id %}" role="button">Atnaujinti kliento duomenis</a>
+    <a class="btn btn-warning" href="{% url 'service:add_car' customer.id %}" role="button">Pridėti automobilį</a>
 
 
 
@@ -31,7 +31,7 @@
         <li><a href="{% url 'service:customer' customer.id %}">{{ car }} {{ car.license_plate }}</a></li>
 
     {% endfor %}
-<h4>Is {{ customer.name }} {{ customer.last_name }} uzdirbti pinigai</h4>
+<h4>Is {{ customer.name }} {{ customer.last_name }} Uždirbti pinigai</h4>
     <li><a>{{ money }}</a></li>
 </form>
 

@@ -1,14 +1,18 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
+from django.core.paginator import Paginator
+from django.utils.safestring import mark_safe
+from django.contrib import messages
+from django.forms import modelform_factory
+from django.views import generic
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView
+import calendar
+from datetime import datetime, date, timedelta
 from .forms import CustomerForm, EventForm, WorkPricingForm
 from .models import Customer, Car, Event, WorkPricing
-from django.forms import modelform_factory
-from datetime import datetime, date, timedelta
-from django.views import generic
-from django.utils.safestring import mark_safe
 from .utils import Calendar
-from django.urls import reverse
-import calendar
 
 
 def index(request):
@@ -20,15 +24,25 @@ def show_contacts(request):
 
 
 def show_finished_jobs_photo(request):
-    return render(request, 'service/finished_jobs_photo.html')
+    photos = Event.objects.order_by('-id')[:10]
+    return render(request, 'service/finished_jobs_photo.html', {'photos': photos})
 
 
+@login_required
 def all_customers(request):
     customers = Customer.objects.all()
-    context = {'customers': customers}
-    return render(request, 'service/customers.html', context)
+    paginator = Paginator(customers, 15)
+    page_number = request.GET.get("page", 1)
+    page_object = paginator.get_page(page_number)
+    return render(request, 'service/customers.html', {"page_object": page_object})
 
 
+class CustomerListView(ListView):
+    paginate_by = 15
+    model = Customer
+
+
+@login_required
 def add_customer(request):
     if request.method == 'POST':
         form = CustomerForm(request.POST)
@@ -41,6 +55,7 @@ def add_customer(request):
     return render(request, 'service/add_customer.html', context)
 
 
+@login_required
 def delete_customer(request, customer_id):
     customer = Customer.objects.get(pk=customer_id)
     if request.method == 'POST':
@@ -50,6 +65,7 @@ def delete_customer(request, customer_id):
     return render(request, "service/delete_customer.html", context)
 
 
+@login_required
 def get_customer(request, customer_id):
     customer = Customer.objects.get(pk=customer_id)
     cars = Car.objects.filter(customer=customer)
@@ -63,6 +79,7 @@ def get_customer(request, customer_id):
     return render(request, 'service/customer.html', context)
 
 
+@login_required
 def update_customer(request, customer_id):
     instance = Customer.objects.get(pk=customer_id)
     form = CustomerForm(request.POST or None, instance=instance)
@@ -72,6 +89,7 @@ def update_customer(request, customer_id):
     return render(request, "service/update_customer.html", {'form': form})
 
 
+@login_required
 def add_car(request, customer_id):
     AuthorFormSet = modelform_factory(Car, fields=('car', 'model', 'color', 'license_plate'))
     if request.method == "POST":
@@ -91,32 +109,8 @@ def add_car(request, customer_id):
     context = {"form": form}
     return render(request, "service/add_car.html", context)
 
-
-# def add_unfinished_car_photo(request):
-#     if request.method == "POST":
-#         form = UnfinishedCarPhotoForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             return redirect("service:customers")
-#         else:
-#             context = {'form': form}
-#             return render(request, "service/add_unfinished_car_photo.html", context)
-#     context = {"form": UnfinishedCarPhotoForm()}
-#     return render(request, "service/add_unfinished_car_photo.html", context)
 #
-#
-# def add_finished_car_photo(request, customer_id):
-#     new = FinishedCarPhotoForm()
-#     if request.method == "POST":
-#         new = FinishedCarPhotoForm(request.POST, request.FILES)
-#         if new.is_valid():
-#             new.save()
-#             return redirect("service:customers")
-#     form = new
-#     context = {'form': form, 'customer_id': customer_id}
-#     return render(request, "service/add_finished_car_photo.html", context)
-#
-#
+@login_required
 def get_received_money(request):
     money = Event.objects.all()
     result = {}
@@ -173,19 +167,34 @@ def event(request, event_id=None):
     instance = Event()
     if event_id:
         instance = get_object_or_404(Event, pk=event_id)
-    form = EventForm(request.POST or None, instance=instance)
+    form = EventForm(request.POST or None, request.FILES or None, instance=instance)
     if request.POST and form.is_valid():
-        form.save()
-        return HttpResponseRedirect(reverse('service:calendar'))
+        print(form, {'end_time'})
+
+    #     if form.cleaned_data('end_time') > form.cleaned_data('start_time'):
+    #         form.save()
+    #     else:
+    #         messages.error(request, 'Darbų pabaigos diena negali būti ankstesnė už darbų pradžios datą')
+    #         return redirect('service:event')
+    #
+    #     return HttpResponseRedirect(reverse('service:calendar'))
     return render(request, 'service/event.html', {'form': form})
 
 
 def work_pricing(request):
     price = WorkPricing.objects.all()
-    context = {'price': price, 'work_id': 1}
-    return render(request, 'service/work_pricing.html', context)
+    paginator = Paginator(price, 15)
+    page_number = request.GET.get("page", 1)
+    page_object = paginator.get_page(page_number)
+    return render(request, 'service/work_pricing.html', {"page_object": page_object})
 
 
+class PriceListView(ListView):
+    paginate_by = 15
+    model = WorkPricing
+
+
+@login_required
 def add_work(request):
     if request.method == 'POST':
         form = WorkPricingForm(request.POST)
@@ -198,6 +207,7 @@ def add_work(request):
     return render(request, 'service/add_work.html', context)
 
 
+@login_required
 def update_work(request, work_id):
     instance = WorkPricing.objects.get(pk=work_id)
     form = WorkPricingForm(request.POST or None, request.FILES or None, instance=instance)
@@ -208,8 +218,10 @@ def update_work(request, work_id):
     return render(request, "service/update_work.html", context=context)
 
 
+@login_required
 def delete_work(request, work_id):
     work = WorkPricing.objects.get(pk=work_id)
+    # work = get_object_or_404(WorkPricing, pk=work_id)
     if request.method == 'POST':
         work.delete()
         return redirect("service:work_pricing")

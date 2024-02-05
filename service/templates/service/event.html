@@ -9,7 +9,7 @@ Event
 
 
 
-<form method="post">
+<form method="post" enctype='multipart/form-data'>
   {% csrf_token %}
   <table class="form form-table">
     {{ form }}

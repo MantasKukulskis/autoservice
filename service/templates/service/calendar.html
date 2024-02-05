@@ -3,9 +3,9 @@
 {% block content %}
 
 <div class="clearfix">
-	<a class="btn btn-info left" href="{% url 'service:calendar' %}?{{ prev_month }}"> Previous Month </a>
-	<a class="btn btn-info right" href="{% url 'service:calendar' %}?{{ next_month }}"> Next Month </a>
-	<a class="btn btn-info left" href="{% url 'service:event' %}"> Event </a>
+	<a class="btn btn-info left" href="{% url 'service:calendar' %}?{{ prev_month }}"> Praeitas mėnesis </a>
+	<a class="btn btn-info right" href="{% url 'service:calendar' %}?{{ next_month }}"> Sekantis Mėnesis </a>
+	<a class="btn btn-info left" href="{% url 'service:event' %}"> Registruotis </a>
 </div>
 {{ calendar }}
 {% endblock %}

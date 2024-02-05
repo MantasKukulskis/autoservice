@@ -88,7 +88,7 @@ class WorkPricing(BaseModel):
     description = models.TextField()
 
     def __str__(self):
-        return f'{self.prise_of_work} € : {self.work}'
+        return f' {self.work} € {self.prise_of_work}'
 
 
 class Event(BaseModel):
@@ -98,14 +98,24 @@ class Event(BaseModel):
     end_time = models.DateTimeField()
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     works_and_prices = models.ForeignKey(WorkPricing, on_delete=models.CASCADE, default='')
-    photo_before = models.ImageField(blank=True, upload_to='before/')
-    photo_after = models.ImageField(blank=True, upload_to='after/')
+    photo_before = models.ImageField(blank=True, upload_to='poliravimas/media/before/')
+    photo_after = models.ImageField(blank=True, upload_to='poliravimas/media/after/')
     received_money = models.IntegerField(blank=False)
 
     @property
     def get_html_url(self):
         url = reverse('service:modify_event', args=(self.id,))
         return f'<a href="{url}">{self.title}</a>'
+
+
+class Login(BaseModel):
+    username = models.CharField(max_length=200)
+    password = models.CharField(max_length=200)
+
+
+class Register(BaseModel):
+    Vartotojas = models.CharField(max_length=20, blank=False)
+    Slaptažodis = models.CharField(max_length=20, blank=False)
 
 
 

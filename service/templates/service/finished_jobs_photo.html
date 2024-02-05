@@ -2,11 +2,17 @@
 
 {% block content %}
 
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="OK">
+{% load static %}
 
-</form>
-<h2> cia nuotraukos </h2>
+
+    <div class="gallery">
+        {% for photo in photos %}
+            <div class="photo">
+                <img src="{{ photo.photo_after }}" width="120"/>
+                <p><a href="{% url 'service:finished_jobs_photo'  %}">{{ photo }}</a></p>
+                <p><a >{{ photo.photo_after }}</a></p>
+
+            </div>
+        {% endfor %}
+</div>
 {% endblock %}
