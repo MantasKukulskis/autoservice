@@ -2,13 +2,15 @@
 
 {% block content %}
 
-{% load static %}
+    {% load static %}
+
+
 
 
     <div class="gallery">
         {% for photo in photos %}
             <div class="photo">
-                <img src="{{ photo.photo_after }}" width="120"/>
+                <img src="{{ photo }}" width="120"/>
                 <p><a href="{% url 'service:finished_jobs_photo'  %}">{{ photo }}</a></p>
                 <p><a >{{ photo.photo_after }}</a></p>
 

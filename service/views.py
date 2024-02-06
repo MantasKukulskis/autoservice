@@ -109,7 +109,7 @@ def add_car(request, customer_id):
     context = {"form": form}
     return render(request, "service/add_car.html", context)
 
-#
+
 @login_required
 def get_received_money(request):
     money = Event.objects.all()
@@ -121,9 +121,12 @@ def get_received_money(request):
             result[customer]['received_money'] += suma
         else:
             result[customer] = {'received_money': suma}
-    context = {'result': result}
+    final_result = [{key: value} for key, value in result.items()]
+    paginator = Paginator(final_result, 15)
+    page_number = request.GET.get("page", 1)
+    page_object = paginator.get_page(page_number)
 
-    return render(request, 'service/get_received_money.html', context)
+    return render(request, 'service/get_received_money.html', {"page_obj": page_object})
 
 
 class CalendarView(generic.ListView):
@@ -169,15 +172,13 @@ def event(request, event_id=None):
         instance = get_object_or_404(Event, pk=event_id)
     form = EventForm(request.POST or None, request.FILES or None, instance=instance)
     if request.POST and form.is_valid():
-        print(form, {'end_time'})
+        if form.cleaned_data['end_time'] > form.cleaned_data['start_time']:
+            form.save()
+        else:
+            messages.error(request, 'Darbų pabaigos diena negali būti ankstesnė už darbų pradžios datą')
+            return redirect('service:event')
 
-    #     if form.cleaned_data('end_time') > form.cleaned_data('start_time'):
-    #         form.save()
-    #     else:
-    #         messages.error(request, 'Darbų pabaigos diena negali būti ankstesnė už darbų pradžios datą')
-    #         return redirect('service:event')
-    #
-    #     return HttpResponseRedirect(reverse('service:calendar'))
+        return HttpResponseRedirect(reverse('service:calendar'))
     return render(request, 'service/event.html', {'form': form})
 
 
@@ -186,7 +187,7 @@ def work_pricing(request):
     paginator = Paginator(price, 15)
     page_number = request.GET.get("page", 1)
     page_object = paginator.get_page(page_number)
-    return render(request, 'service/work_pricing.html', {"page_object": page_object})
+    return render(request, 'service/work_pricing.html', {"page_obj": page_object})
 
 
 class PriceListView(ListView):

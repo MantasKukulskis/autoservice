@@ -97,7 +97,7 @@ class Event(BaseModel):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    works_and_prices = models.ForeignKey(WorkPricing, on_delete=models.CASCADE, default='')
+    works_and_prices = models.ManyToManyField(WorkPricing)
     photo_before = models.ImageField(blank=True, upload_to='poliravimas/media/before/')
     photo_after = models.ImageField(blank=True, upload_to='poliravimas/media/after/')
     received_money = models.IntegerField(blank=False)

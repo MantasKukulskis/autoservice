@@ -30,19 +30,20 @@
 
             <input type="hidden" name="next" value="{{ next }}">
 
-            {% if user.is_authenticated %} 
+            {% if user.is_authenticated %}
             <hr>
             <div class="row mx-1">
-            <a class="btn btn-danger" href="{% url 'logout' %}">Atsijunti</a>
+            <a class="btn btn-danger" href="{% url 'logout' %}">Atsijungti</a>
+
             <a class="btn btn-danger ml-auto" href="{% url 'change-password' %}">Pakeisti slaptažodį</a>
                 <a class="btn btn-warning" href="{% url 'register' %}">Užsiregistruoti</a>
 
             </div>
-            {% endif %}
+
 
         </form>
 
     </div>
 </div>
-
+ {% endif %}
 {% endblock %}

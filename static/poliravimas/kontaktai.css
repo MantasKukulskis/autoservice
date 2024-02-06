@@ -3,7 +3,7 @@ h2 {
 }
 
 body {
-    background: grey url("images/contacts.jpg") no-repeat;
+    background: green url("images/contacts.jpg") no-repeat;
       background-position: right top;
       font-weight: 700;
       font-size: 20px;

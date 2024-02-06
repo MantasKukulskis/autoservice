@@ -41,29 +41,11 @@ class CustomerForm(forms.ModelForm):
 #                   'before_work_photo']
 
 
-# class UnfinishedCarPhotoForm(forms.ModelForm):
-#
-#     def __init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         self.instance.publication_date = datetime.date.today()
-#
-#     class Meta:
-#         model = UnfinishedCarPhoto
-#         exclude = ['publication_date']
-#         fields = ['car_photo', 'descripcion', 'publication_date']
-#
-#
-# class FinishedCarPhotoForm(forms.ModelForm):
-#
-#     class Meta:
-#         model = FinishedCarPhoto
-#         exclude = ['publication_date']
-#         fields = "__all__"
-
-
 class EventForm(ModelForm):
     class Meta:
-        works_and_prices = forms.ModelMultipleChoiceField(queryset=Event.objects.all(), required=False)
+        works_and_prices = forms.ModelMultipleChoiceField(queryset=WorkPricing.objects.all().order_by('work'),
+                                                          label="WorkPricing", widget=forms.CheckboxSelectMultiple,
+                                                          blank=True)
         model = Event
         widgets = {
           'start_time': DateInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
