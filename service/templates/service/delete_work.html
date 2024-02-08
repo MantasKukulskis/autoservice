@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Ar tikrai nori ištrinti {{ work }}?</h2>
+    <h2>Ar tikrai nori ištrinti {{ work }}?</h2>
 
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="OK">
-</form>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="OK">
+    </form>
 
 {% endblock %}

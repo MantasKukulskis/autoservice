@@ -24,8 +24,8 @@ def show_contacts(request):
 
 
 def show_finished_jobs_photo(request):
-    photos = Event.objects.order_by('-id')[:10]
-    return render(request, 'service/finished_jobs_photo.html', {'photos': photos})
+    events = Event.objects.order_by('-id')[:12]
+    return render(request, 'service/finished_jobs_photo.html', {'events': events})
 
 
 @login_required

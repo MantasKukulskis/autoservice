@@ -2,56 +2,53 @@
 
 {% block content %}
 
-{% load static %}
+    {% load static %}
 
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Vardas</th>
+              <th scope="col">Pavardė</th>
+              <th scope="col">Uždirbti pinigai</th>
+            </tr>
+          </thead>
+          <tbody>
 
+            {% for customer in page_obj %}
 
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Vardas</th>
-      <th scope="col">Pavardė</th>
-      <th scope="col">Uždirbti pinigai</th>
-    </tr>
-  </thead>
-  <tbody>
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+            {% for c, suma in customer.items %}
 
+                      <td>{{ c.name }}</td>
+                      <td>{{ c.last_name }}</td>
+                      <td>{{ suma.received_money }}</td>
+            {% endfor %}
 
-        {% for customer in page_obj %}
-
-<tr>
-    <th scope="row">{{ forloop.counter }}</th>
-{% for c, suma in customer.items %}
-
-          <td>{{ c.name }}</td>
-          <td>{{ c.last_name }}</td>
-          <td>{{ suma.received_money }}</td>
-  {% endfor %}
-
-</tr>
+            </tr>
          {% endfor %}
-  </tbody>
-    </table>
 
+          </tbody>
+        </table>
 
-<div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-        {% endif %}
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; first</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
 
-        <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-        </span>
+                <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
 
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">Pirmyn</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">Atgal &raquo;</a>
-        {% endif %}
-    </span>
-</div>
-<input type=button value="Atgal" onClick="javascript:history.go(-1);">
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">Pirmyn</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">Atgal &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+        <input type=button value="Atgal" onClick="javascript:history.go(-1);">
 
 {% endblock %}

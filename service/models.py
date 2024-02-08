@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.timezone import now
-import datetime
 from django.urls import reverse
+import datetime
 
 
 class BaseModel(models.Model):
@@ -35,22 +35,6 @@ class Car(BaseModel):
 
     def was_published_recently(self):
         return self.pub_date >= now() - datetime.timedelta(days=1)
-
-
-# class UnfinishedCarPhoto(BaseModel):
-#     car_photo = models.ImageField(upload_to='portal_images/')
-#     descripcion = models.CharField(max_length=1000, blank=True)
-#     publication_date = models.DateField(default=datetime.date.today)
-#
-#     def __str__(self):
-#         return self.publication_date
-#
-#
-# class FinishedCarPhoto(BaseModel):
-#     car_photo = models.ImageField(upload_to='images/')
-#     received_money = models.IntegerField(blank=False)
-#     descripcion = models.CharField(max_length=1000, blank=True)
-#     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
 
 
 class Service(BaseModel):
@@ -98,8 +82,8 @@ class Event(BaseModel):
     end_time = models.DateTimeField()
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     works_and_prices = models.ManyToManyField(WorkPricing)
-    photo_before = models.ImageField(blank=True, upload_to='poliravimas/media/before/')
-    photo_after = models.ImageField(blank=True, upload_to='poliravimas/media/after/')
+    photo_before = models.ImageField(blank=True, upload_to='before/')
+    photo_after = models.ImageField(blank=True, upload_to='after/')
     received_money = models.IntegerField(blank=False)
 
     @property
@@ -116,6 +100,3 @@ class Login(BaseModel):
 class Register(BaseModel):
     Vartotojas = models.CharField(max_length=20, blank=False)
     Slaptažodis = models.CharField(max_length=20, blank=False)
-
-
-

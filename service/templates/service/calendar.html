@@ -2,10 +2,11 @@
 
 {% block content %}
 
-<div class="clearfix">
-	<a class="btn btn-warning left" href="{% url 'service:calendar' %}?{{ prev_month }}"> Praeitas mėnesis </a>
-	<a class="btn btn-warning right" href="{% url 'service:calendar' %}?{{ next_month }}"> Sekantis Mėnesis </a>
-	<a class="btn btn-warning left" href="{% url 'service:event' %}"> Registruotis </a>
-</div>
-{{ calendar }}
+	<div class="clearfix">
+		<a class="btn btn-warning left" href="{% url 'service:calendar' %}?{{ prev_month }}"> Praeitas mėnesis </a>
+		<a class="btn btn-warning right" href="{% url 'service:calendar' %}?{{ next_month }}"> Sekantis Mėnesis </a>
+		<a class="btn btn-warning left" href="{% url 'service:event' %}"> Registruotis </a>
+	</div>
+	{{ calendar }}
+
 {% endblock %}

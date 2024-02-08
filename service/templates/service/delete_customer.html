@@ -2,13 +2,11 @@
 
 {% block content %}
 
-    <h2>Ar tikrai nori ištrinti {{ customer.name }}?</h2>
+    <h2>Ar tikrai norite ištrinti {{ customer.name }}?</h2>
 
     <form action="" method="post">
         {% csrf_token %}
-        <button type="submit" class="btn btn-danger" role="button">
-             Taip
-        </button>
+        <button type="submit" class="btn btn-danger" role="button">Taip</button>
     </form>
     <a class="btn btn-primary"  role="button">Ne</a>
 

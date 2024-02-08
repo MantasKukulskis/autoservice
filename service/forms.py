@@ -1,9 +1,6 @@
-
 from django import forms
 from django.forms import ModelForm, DateInput, ValidationError
 from service.models import Car, Service, Employer, Customer, Event, WorkPricing, Login, Register
-
-# CarForm = modelform_factory(Car, fields=('car', 'model', 'color', 'license_plate', 'customer'))
 
 
 class CarForm(forms.ModelForm):
@@ -32,13 +29,6 @@ class CustomerForm(forms.ModelForm):
     class Meta:
         model = Customer
         fields = ['name', 'last_name', 'phone_number', 'email_address']
-
-
-# class JobsForm(forms.ModelForm):
-#     class Meta:
-#         model = Jobs
-#         fields = ['job_status', 'employer', 'jobs', 'working_hours', 'total_amount', 'finished_work_photo',
-#                   'before_work_photo']
 
 
 class EventForm(ModelForm):

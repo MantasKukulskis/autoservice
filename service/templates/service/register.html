@@ -2,11 +2,11 @@
 
 {% block content %}
 
-<form method="POST" novalidate>
-	{% csrf_token %}
-	<h2>Sign Up</h2>
-	{{ form.as_p }}		
-	<input type="submit" value="Register" />
-</form>
+	<form method="POST" novalidate>
+		{% csrf_token %}
+		<h2>Užsiregistruoti</h2>
+		{{ form.as_p }}
+		<input type="submit" value="Register" />
+	</form>
 
 {% endblock content%}

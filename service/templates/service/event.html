@@ -1,20 +1,13 @@
-
 {% extends 'base.html' %}
-
-{% block title %}
-Event
-{% endblock %}
 
 {% block content %}
 
-
-
-<form method="post" enctype='multipart/form-data'>
-  {% csrf_token %}
-  <table class="form form-table">
-    {{ form }}
-    <tr><td colspan="2"><button type="submit" class="btn btn-warning right"> Patvirtinti </button></td></tr>
-  </table>
-</form>
+  <form method="post" enctype='multipart/form-data'>
+    {% csrf_token %}
+    <table class="form form-table">
+      {{ form }}
+      <tr><td colspan="2"><button type="submit" class="btn btn-warning right"> Patvirtinti </button></td></tr>
+    </table>
+  </form>
 
 {% endblock %}

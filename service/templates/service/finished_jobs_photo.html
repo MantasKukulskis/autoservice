@@ -4,17 +4,17 @@
 
     {% load static %}
 
-
-
-
     <div class="gallery">
-        {% for photo in photos %}
-            <div class="photo">
-                <img src="{{ photo }}" width="120"/>
+        <div class="row">
+             {% for event in events %}
+            <div class="col-3" style="background-color: #333; border: 1px solid #fff">
+                <img src="{{ request.scheme }}://{{ request.get_host }}/media/{{ event.photo_after }}" width="350" height="220" alt="poliravimas"/>
                 <p><a href="{% url 'service:finished_jobs_photo'  %}">{{ photo }}</a></p>
                 <p><a >{{ photo.photo_after }}</a></p>
 
             </div>
         {% endfor %}
-</div>
+        </div>
+
+    </div>
 {% endblock %}

@@ -2,42 +2,27 @@
 
 {% block content %}
 
-
-
     <a class="btn btn-warning" href="{% url 'service:delete_customer' customer.id %}" role="button">Ištrinti klientą</a>
     <a class="btn btn-warning" href="{% url 'service:update_customer' customer.id %}" role="button">Atnaujinti kliento duomenis</a>
     <a class="btn btn-warning" href="{% url 'service:add_car' customer.id %}" role="button">Pridėti automobilį</a>
 
-
-
     <tr>
-
-          <th scope="row">{{ forloop.counter }}</th>
-          <td>{{ customer.name }}</td>
-          <td>{{ customer.last_name }}</td>
-          <td>{{ customer.phone_number }}</td>
-          <td>{{ customer.email_address }}</td>
-
+      <th scope="row">{{ forloop.counter }}</th>
+      <td>{{ customer.name }}</td>
+      <td>{{ customer.last_name }}</td>
+      <td>{{ customer.phone_number }}</td>
+      <td>{{ customer.email_address }}</td>
     </tr>
 
 
-<form action="" method="post">
-    {% csrf_token %}
-<h4>{{ customer.name }} {{ customer.last_name }} Turimi automobiliai</h4>
-
-  {% for car in cars %}
-
-
+        <form action="" method="post">
+            {% csrf_token %}
+            <h4>{{ customer.name }} {{ customer.last_name }} Turimi automobiliai</h4>
+    {% for car in cars %}
         <li><a href="{% url 'service:customer' customer.id %}">{{ car }} {{ car.license_plate }}</a></li>
-
     {% endfor %}
-<h4>Is {{ customer.name }} {{ customer.last_name }} Uždirbti pinigai</h4>
-    <li><a>{{ money }}</a></li>
-</form>
-
-
-
-</form>
-
+            <h4>Is {{ customer.name }} {{ customer.last_name }} Uždirbti pinigai</h4>
+        <li><a>{{ money }}</a></li>
+        </form>
 
 {% endblock %}
